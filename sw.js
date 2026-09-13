@@ -26,16 +26,17 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((res) => {
-        // Cache successful same-origin GET requests for future offline use
+    // Network-first: always try to get the latest file when online, so
+    // app updates show up immediately. Only fall back to the cached
+    // copy when there's no connection at all.
+    fetch(event.request)
+      .then((res) => {
         if (event.request.method === "GET" && res && res.status === 200) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         }
         return res;
-      }).catch(() => cached);
-    })
+      })
+      .catch(() => caches.match(event.request))
   );
 });
