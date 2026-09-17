@@ -598,12 +598,12 @@ Error generating stack: `+r.message+`
   align-items: center;
   cursor: pointer;
   font-family: inherit;
-  min-height: 52px;
+  min-height: 58px;
   justify-content: center;
 }
 .item-card:active { background: var(--accent); }
 .item-card:active .item-name { color: #fff; }
-.item-name { font-weight: 700; font-size: 13px; text-align: center; }
+.item-name { font-weight: 700; font-size: 14.5px; line-height: 1.25; text-align: center; }
 .item-price { color: var(--gold); font-weight: 700; font-size: 13px; }
 
 /* modals */
